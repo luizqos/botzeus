@@ -2,7 +2,7 @@ require("dotenv").config();
 const he = require("he");
 const { v4: uuid } = require("uuid");
 const { getLoginCookies } = require("../functions/getLoginCookies");
-const { createRenew } = require("../repositories/renew");
+const { createRenew, findRenew } = require("../repositories/renew");
 function decodeHTMLEntities(text) {
   return he.decode(text);
 }
@@ -229,6 +229,20 @@ class UsersController {
       return res
         .status(500)
         .json({ error: "Erro ao renovar", details: error.message });
+    }
+  }
+
+  static async findRenewal(req, res) {
+    try {
+      const { status } = req.params;
+      const dataFind = { status };
+      const result = await findRenew( dataFind );
+
+      return res.json(result);
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ error: "Erro ao Buscar log de renovações", details: error.message });
     }
   }
 }

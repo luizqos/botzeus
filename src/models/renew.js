@@ -16,7 +16,7 @@ const Renew = sequelize.define("Renew", {
         allowNull: true,
     },
     status: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BOOLEAN,
         allowNull: true,
     },
 }, {
