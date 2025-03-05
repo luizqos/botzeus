@@ -1,7 +1,8 @@
 require("dotenv").config();
 const he = require("he");
+const { v4: uuid } = require("uuid");
 const { getLoginCookies } = require("../functions/getLoginCookies");
-
+const { createRenew } = require("../repositories/renew");
 function decodeHTMLEntities(text) {
   return he.decode(text);
 }
@@ -103,9 +104,12 @@ class UsersController {
 
   static async renewalOfTrust(req, res) {
     try {
+
       const cookie = await getLoginCookies();
       const baseUrl = process.env.URL_ZEUS;
       const { id } = req.params;
+        
+      createRenew({uuid: uuid(), id, status: true});
 
       const myHeaders = new Headers();
       myHeaders.append(
@@ -157,7 +161,7 @@ class UsersController {
       const result = await response.json();
       const returnDecode = decodeHTMLEntities(result.message);
 
-      // Extrai apenas o conteúdo dentro da <div> usando regex
+      // // Extrai apenas o conteúdo dentro da <div> usando regex
       const match = returnDecode.match(/<div[^>]*>(.*?)<\/div>/);
       const message = match ? match[1] : "Mensagem não encontrada";
 
