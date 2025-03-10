@@ -5,6 +5,7 @@ async function getLoginCookies() {
   const browser = await puppeteer.launch({
     headless: Boolean(parseInt(process.env.HEADLESS)),
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    executablePath: process.env.DIRECTORY_BROWSER,
   });
   const page = await browser.newPage();
   const timeBrowser = process.env.TIME_BROWSER;
