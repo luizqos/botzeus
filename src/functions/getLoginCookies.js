@@ -4,7 +4,15 @@ const puppeteer = require("puppeteer");
 async function getLoginCookies() {
   const browser = await puppeteer.launch({
     headless: Boolean(parseInt(process.env.HEADLESS)),
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage",
+      "--disable-gpu",
+      "--disable-software-rasterizer",
+      "--disable-features=VizDisplayCompositor",
+      "--disable-features=site-per-process"
+    ],
     executablePath: process.env.DIRECTORY_BROWSER,
   });
   const page = await browser.newPage();
